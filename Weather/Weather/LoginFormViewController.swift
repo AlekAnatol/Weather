@@ -20,6 +20,7 @@ class LoginFormViewController: UIViewController {
     var enterButton = UIButton()
 
     // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createScrollView()
@@ -44,7 +45,7 @@ class LoginFormViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    // MARK: - IBAction
+    // MARK: - Action
     
     // Отрабатываем появление клавиатуры
     @objc func keyboardWasShown(notification: Notification) {
@@ -70,11 +71,11 @@ class LoginFormViewController: UIViewController {
     @objc func enterButtonPresed(_ sender: UIButton) {
         let login = loginTextField.text
         let password = passwordTextField.text
-        if login == "admin" && password == "123456" {
-            print("успешная авторизация")
-        } else {
-            print("неуспешная авторизация")
-        }
+        //if login == "admin" && password == "123456" {
+            pushNextViewController()
+//        } else {
+//            showAlert()
+//        }
     }
     
     // MARK: - Private Methods
@@ -130,6 +131,7 @@ class LoginFormViewController: UIViewController {
         passwordTextField.layer.cornerRadius = 5
         passwordTextField.font = .boldSystemFont(ofSize: 17)
         passwordTextField.placeholder = "Enter password"
+        passwordTextField.isSecureTextEntry = true
         
         enterButton = UIButton(frame: CGRect(x: (Int(view.frame.width) - ViewSizes.buttonWidth)/2,
                                              y: 370,
@@ -151,6 +153,22 @@ class LoginFormViewController: UIViewController {
         scrollView.addSubview(passwordTextField)
         scrollView.addSubview(enterButton)
         view.addSubview(scrollView)
+    }
+    
+    private func pushNextViewController() -> Void {
+        let nextController = AvailableCitiesTableViewController(style: .plain)
+        self.navigationItem.backButtonTitle = "To login page"
+        self.navigationController?.pushViewController(nextController, animated: true)
+    }
+    
+    
+    private func showAlert() -> Void {
+        let alert = UIAlertController(title: "Ошибка",
+                                      message: "Введены неверные данные пользователя",
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel, handler:nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
 }
 

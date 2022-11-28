@@ -16,7 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         let loginController = LoginFormViewController()
-        window.rootViewController = loginController
+        let navigatioController = UINavigationController(rootViewController: loginController)
+        window.rootViewController = navigatioController
         window.backgroundColor = UIColor.yellow
         
         self.window = window
