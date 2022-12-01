@@ -15,7 +15,7 @@ class AddableCitiesViewController: UIViewController {
     
     // MARK: - Private Properties
     
-    private var citiesToAdd = ["Mahachkala", "Lima"]
+    private var citiesToAdd = ["Mahachkala", "Lima", "Moscow", "Samara", "Ulyanovsk", "Kazan"]
     private let reuseIdentifier = "cities"
     
     // MARK: - Life cycle
@@ -57,6 +57,13 @@ extension AddableCitiesViewController: UITableViewDataSource {
 
 extension AddableCitiesViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let countOfVC = navigationController?.viewControllers.count,
+              let previosViewController = navigationController?.viewControllers[countOfVC - 2] as? AvailableCitiesTableViewController else { return }
+        previosViewController.addCity(city: citiesToAdd[indexPath.row])
+        print("Add \(citiesToAdd[indexPath.row])")
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 
